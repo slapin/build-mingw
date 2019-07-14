@@ -51,6 +51,8 @@ curl -o /dev/null -sH "$AUTH" $GH_REPO || { echo "Error: Invalid repo, token or 
 # Read asset tags.
 response=$(curl -sH "$AUTH" $GH_TAGS)
 
+curl "$GITHUB_OAUTH_BASIC" -H "Authorization: token $github_api_token" --data "{ \"tag_name\": \"$tag\", \"name\": \"$repo $tag\", \"body\": "", \"draft\": true }" $GH_REPO/releases
+
 # Get ID of the asset based on given filename.
 eval $(echo "$response" | grep -m 1 "id.:" | grep -w id | tr : = | tr -cd '[[:alnum:]]=')
 [ "$id" ] || { echo "Error: Failed to get release id for tag: $tag"; echo "$response" | awk 'length($0)<100' >&2; exit 1; }
