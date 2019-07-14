@@ -11,6 +11,7 @@ def git_clone(url, branch, dirname)
 }
 node('docker && ubuntu-16.04') {
 	stage("init") {
+		checkout scm
 		sh '''#!/bin/sh
 			ls -l
 			sudo apt-get update
@@ -34,5 +35,9 @@ node('docker && ubuntu-16.04') {
 			tar zcf mingw-build.tar.bz2 mingw-build
 		'''
 		archiveArtifacts artifacts: "mingw-build.tar.bz2", onlyIfSuccessful: true
+		withCredentials([string(credentialsId: 'github-token', variable: 'gh_token')]) {
+			
+		}
+
 	}
 }
