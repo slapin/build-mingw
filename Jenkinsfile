@@ -18,7 +18,7 @@ node('docker && ubuntu-16.04') {
 			cd mingw-build
 			./mingw-w64-build --help
 			set -e
-			./mingw-w64-build i686 x86_64
+			./mingw-w64-build i686 x86_64 || { cat build.log; exit 1; }
 		'''
 	}
 	stage("artifacts") {
