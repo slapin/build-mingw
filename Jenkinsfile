@@ -22,6 +22,7 @@ node('docker && ubuntu-16.04') {
 	}
 	stage("artifacts") {
 		sh '''#!/bin/sh
+			rm -Rf mingw-build/bld mingw-build/src
 			tar zcf mingw-build.tar.bz2 mingw-build
 		'''
 		archiveArtifacts artifacts: "mingw-build.tar.bz2", onlyIfSuccessful: true
