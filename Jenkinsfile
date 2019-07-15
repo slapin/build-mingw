@@ -12,8 +12,9 @@ node('docker && ubuntu-16.04') {
 	}
 	stage("build-mingw-toolchain") {
 		sh '''#!/bin/sh
+			rm -Rf mingw-build
 			mkdir mingw-build
-			cp mingw-w64-build mingw-build
+			cp mingw-w64-build mingw-build/
 			cd mingw-build
 			./mingw-w64-build --help
 			set -e
